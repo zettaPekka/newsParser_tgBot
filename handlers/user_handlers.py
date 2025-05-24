@@ -57,8 +57,7 @@ async def get_news_handler(callback: CallbackQuery):
     filter_name = await get_filter(callback.from_user.id)
     try:
         title, main_part, img_url = await get_news(rubric=filter_name)
-    except Exception as e:
-        print(e)
+    except:
         await callback.message.answer('<b>Не удалось получить новость, попробуйте еще раз</b>')
         return
     await callback.message.answer_photo(img_url, caption=f'<b>{title}</b>\n\n<i>{main_part}</i>',

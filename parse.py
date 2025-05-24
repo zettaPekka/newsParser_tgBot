@@ -12,7 +12,6 @@ async def get_news(rubric: str):
             
             for news_tag in news_tags:
                 news_url = 'https://lenta.ru' + news_tag['href']
-                print(news_url)
             
                 async with session.get(news_url) as response:
                     soup = BeautifulSoup(await response.text(), 'html.parser')
