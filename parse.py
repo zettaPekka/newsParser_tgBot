@@ -16,6 +16,7 @@ async def get_news(rubric: str):
                 async with session.get(news_url) as response:
                     soup = BeautifulSoup(await response.text(), 'html.parser')
                     title = soup.find('span', class_='topic-body__title').text
+                    title = title.replace('<', '&lt;').replace('>', '&gt;')
                     
                     news_text = ''
                     data_tags = soup.find_all('p', class_='topic-body__content-text')
@@ -23,6 +24,7 @@ async def get_news(rubric: str):
                         news_text += tag.text + '\n\n'
                     if len(news_text) + len(title) > 1000:
                         continue
+                    news_text = news_text.replace('<', '&lt;').replace('>', '&gt;')
                     
                     try:
                         img_page_url = 'https://lenta.ru' + soup.find('a', class_='topic-body__title-image-zoom')['href']
